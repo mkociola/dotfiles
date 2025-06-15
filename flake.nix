@@ -171,6 +171,9 @@
             # Kitty terminal configuration.
             home.file.".config/kitty/kitty.conf".source = ./kitty/kitty.conf;
 
+            # Github configuration.
+            home.file.".gitconfig".source = ./git/.gitconfig;
+
 						# Additional tools.
 						home.packages = with pkgs; [
               # Neovim
