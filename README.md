@@ -36,14 +36,14 @@ This repository contains my declarative macOS system configuration using:
 
 ```bash
 # 1. Install Nix using Determinate Systems (safe, fast)
-curl -L https://install.determinate.systems/nix | sh
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 
 # 2. Clone this repository
 git clone https://github.com/mkociola/dotfiles.git ~/nix-config
 cd ~/nix-config
 
 # 3. Apply the configuration
-sudo darwin-rebuild switch --flake .#macbook
+sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#macbook
 ```
 
 ✅ Done! Your system is now bootstrapped with your full setup.
