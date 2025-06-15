@@ -87,7 +87,7 @@
 				# Dock
 				dock.autohide = false;
 				dock.magnification = true;
-				dock.largesize = 64; # Magnified icon size on hover.
+				dock.largesize = 80; # Magnified icon size on hover.
 				dock.expose-group-apps = true; # Group windows by application in Mission Control.
 				dock.launchanim = true; # Animate opening applications.
 				dock.persistent-apps = [ # Apps on dock.
