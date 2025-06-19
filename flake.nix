@@ -163,7 +163,7 @@
 
                   initContent = ''
                     # Set up Oh My Posh prompt
-                    eval "$(oh-my-posh init zsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin.omp.json)"
+                    eval "$(oh-my-posh init zsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/amro.omp.json)"
 
                     # Optional aliases
                     export EDITOR=nvim
