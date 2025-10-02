@@ -37,6 +37,8 @@ vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
 vim.opt.expandtab = true
 
+vim.o.winborder = "rounded"
+
 --
 -- Setup lazy.nvim
 --
@@ -180,14 +182,17 @@ vim.keymap.set("n", "<leader>e", ":Telescope file_browser path=%:p:h select_buff
 -- LSP
 vim.diagnostic.config({
   virtual_text = true,
-  underline = true,
-  severity_sort = true,
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("my.lsp", {}),
   callback = function(args)
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+    -- Auto completion
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+    end
 
     -- Auto format
     if
@@ -204,3 +209,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
+
+vim.cmd("set completeopt+=noselect")
