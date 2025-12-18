@@ -149,20 +149,14 @@ require("lazy").setup({
     { "nvim-tree/nvim-web-devicons", opts = {} },
 
     -- Theme
-    {
-      "vague2k/vague.nvim",
-      name = "vague",
-      priority = 1000,
-      config = function()
-        require("vague").setup({})
-        vim.cmd([[colorscheme vague]])
-      end,
-    },
+    { "bluz71/vim-moonfly-colors",   name = "moonfly", lazy = false, priority = 1000 },
   },
 
   -- Automatically check for plugin updates
   checker = { enabled = false },
 })
+
+vim.cmd([[colorscheme moonfly]])
 
 -- Load Telescope extensions
 require("telescope").load_extension("file_browser")
