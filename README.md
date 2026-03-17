@@ -7,7 +7,6 @@ Directory containing all of my configuration files
 Ensure you have the following installed
 
 - stow (a symlink farm manager)
-- starship (a zsh theme)
 
 ### Fonts
 
@@ -27,3 +26,5 @@ then use GNU stow to create the symlinks
 ```bash
 stow .
 ```
+
+good to go :)

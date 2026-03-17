@@ -1,4 +1,4 @@
-theme = "Github Dark Default"
+theme = "Monokai Remastered"
 
 font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 16
@@ -9,4 +9,4 @@ window-padding-y = 8
 window-padding-x = 8
 
 window-width = 120
-window-height = 40
+window-height = 30
