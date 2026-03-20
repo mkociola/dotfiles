@@ -7,6 +7,7 @@ Directory containing all of my configuration files
 Ensure you have the following installed
 
 - stow (a symlink farm manager)
+- ripgrep (neovim)
 
 ### Fonts
 
