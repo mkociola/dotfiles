@@ -48,12 +48,12 @@ require("lazy").setup({
 			tag = "0.1.8",
 			dependencies = { "nvim-lua/plenary.nvim" },
 			opts = {
-				defaults = {
-					layout_strategy = "horizontal",
-					layout_config = { width = 0.9, height = 0.5, prompt_position = "top" },
+				extensions = {
+					file_browser = {
+						hijack_netrw = true,
+						sorting_strategy = "ascending",
+					},
 				},
-				pickers = { find_files = { theme = "dropdown" } },
-				extensions = { file_browser = { theme = "dropdown", hijack_netrw = true } },
 			},
 		},
 		{ "nvim-telescope/telescope-file-browser.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
