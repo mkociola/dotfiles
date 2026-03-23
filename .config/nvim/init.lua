@@ -201,11 +201,11 @@ require("lazy").setup({
 
 		-- Theme
 		{
-			"rebelot/kanagawa.nvim",
-			name = "kanagawa",
+			"folke/tokyonight.nvim",
+			name = "tokyonight",
 			priority = 1000,
 			config = function()
-				vim.cmd.colorscheme("kanagawa")
+				vim.cmd.colorscheme("tokyonight-night")
 			end,
 		},
 
@@ -247,15 +247,6 @@ require("lazy").setup({
 
 				require("avante").setup({
 					provider = "copilot",
-					auto_suggestions = false,
-					behaviour = {
-						auto_suggestions = false,
-					},
-					window = {
-						sidebar = {
-							width = 35,
-						},
-					},
 				})
 
 				vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>AvanteAsk<CR>", { desc = "Avante: Toggle Chat" })
