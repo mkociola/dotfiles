@@ -134,7 +134,7 @@ require("lazy").setup({
 						end,
 					},
 					mapping = cmp.mapping.preset.insert({
-						["<CR>"] = cmp.mapping.confirm({ select = true }),
+						["<CR>"] = cmp.mapping.confirm(),
 					}),
 					formatting = {
 						format = require("lspkind").cmp_format({
@@ -150,6 +150,7 @@ require("lazy").setup({
 						}),
 					},
 					sources = cmp.config.sources({
+						{ name = "copilot" },
 						{ name = "nvim_lsp" },
 						{ name = "luasnip" },
 					}, {
@@ -184,7 +185,11 @@ require("lazy").setup({
 					lualine_a = { "mode" },
 					lualine_b = { "branch", "diff", "diagnostics" },
 					lualine_c = { "filename" },
-					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_x = {
+						"encoding",
+						"fileformat",
+						"filetype",
+					},
 					lualine_y = { "progress" },
 					lualine_z = { "location" },
 				},
@@ -201,6 +206,62 @@ require("lazy").setup({
 			priority = 1000,
 			config = function()
 				vim.cmd.colorscheme("kanagawa")
+			end,
+		},
+
+		-- AI stuff
+		{
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			event = "InsertEnter",
+			config = function()
+				require("copilot").setup({
+					suggestion = { enabled = false },
+					panel = { enabled = false },
+				})
+			end,
+		},
+		{
+			"zbirenbaum/copilot-cmp",
+			dependencies = { "zbirenbaum/copilot.lua" },
+			config = function()
+				require("copilot_cmp").setup()
+			end,
+		},
+		{
+			"yetone/avante.nvim",
+			event = "VeryLazy",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"MunifTanjim/nui.nvim",
+				"nvim-tree/nvim-web-devicons",
+				"MeanderingProgrammer/render-markdown.nvim",
+			},
+			build = "make",
+			config = function(_, opts)
+				require("avante_lib").load()
+
+				require("render-markdown").setup({
+					file_types = { "markdown", "Avante" },
+				})
+
+				require("avante").setup({
+					provider = "copilot",
+					auto_suggestions = false,
+					behaviour = {
+						auto_suggestions = false,
+					},
+					window = {
+						sidebar = {
+							width = 35,
+						},
+					},
+				})
+
+				vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>AvanteAsk<CR>", { desc = "Avante: Toggle Chat" })
+				vim.keymap.set({ "n", "v" }, "<leader>ae", "<cmd>AvanteEdit<CR>", { desc = "Avante: Edit selection" })
+				vim.keymap.set({ "n", "v" }, "<leader>ar", "<cmd>AvanteRefresh<CR>", { desc = "Avante: Refresh" })
+				vim.keymap.set({ "n", "v" }, "<leader>af", "<cmd>AvanteFocus<CR>", { desc = "Avante: Focus chat" })
 			end,
 		},
 	},
