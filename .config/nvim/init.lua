@@ -42,11 +42,16 @@ require("lazy").setup({
 				indent = { enable = true },
 			},
 		},
+
 		-- Telescope
 		{
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.8",
-			dependencies = { "nvim-lua/plenary.nvim" },
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"nvim-telescope/telescope-file-browser.nvim",
+				"nvim-telescope/telescope-ui-select.nvim",
+			},
 			opts = {
 				extensions = {
 					file_browser = {
@@ -55,53 +60,32 @@ require("lazy").setup({
 					},
 				},
 			},
+			config = function()
+				-- Load extensions
+				require("telescope").load_extension("file_browser")
+				require("telescope").load_extension("ui-select")
+
+				-- Keymaps
+				local builtin = require("telescope.builtin")
+				vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+				vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+				vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+				vim.keymap.set("n", "<leader>e", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+			end,
 		},
-		{ "nvim-telescope/telescope-file-browser.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
-		-- Mason (note: use :MasonInstall for formatters like stylua/black)
-		{ "williamboman/mason.nvim", config = true },
-		{ "neovim/nvim-lspconfig" },
-		-- Mason-lspconfig (updated for cmp capabilities)
+
+		-- LSP
+		{ "mason-org/mason.nvim", config = true },
 		{
-			"williamboman/mason-lspconfig.nvim",
-			dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig", "hrsh7th/cmp-nvim-lsp" },
+			"mason-org/mason-lspconfig.nvim",
+			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
 			opts = {
-				ensure_installed = { "lua_ls", "pyright" },
-				handlers = {
-					function(server_name)
-						-- Add cmp capabilities for better completion integration
-						local capabilities = require("cmp_nvim_lsp").default_capabilities()
-						require("lspconfig")[server_name].setup({
-							capabilities = capabilities,
-							on_attach = function(client, bufnr)
-								-- Standard LSP keymaps
-								local opts = { buffer = bufnr }
-								vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-								vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-								vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-								vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-								vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-								-- Inlay hints
-								if client.supports_method("textDocument/inlayHint") then
-									vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-								end
-
-								-- Range Formatting Support
-								if client.supports_method("textDocument/rangeFormatting") then
-									vim.keymap.set("v", "<leader>cf", vim.lsp.buf.format, opts)
-								end
-
-								-- On-Type Formatting Support
-								if client.supports_method("textDocument/onTypeFormatting") then
-									vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
-								end
-							end,
-						})
-					end,
-				},
+				ensure_installed = { "lua_ls", "basedpyright" },
 			},
 		},
-		-- conform.nvim for unified formatting
+		{ "neovim/nvim-lspconfig" },
+
+		-- Formatting
 		{
 			"stevearc/conform.nvim",
 			opts = {
@@ -111,8 +95,10 @@ require("lazy").setup({
 				format_on_save = { timeout_ms = 1000, lsp_format = "fallback" },
 			},
 		},
+
 		-- Autopairs
 		{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+
 		-- Gitsigns
 		{
 			"lewis6991/gitsigns.nvim",
@@ -124,8 +110,10 @@ require("lazy").setup({
 				end,
 			},
 		},
+
 		-- Mini.surround
 		{ "echasnovski/mini.surround", version = false, opts = {} },
+
 		-- nvim-cmp
 		{
 			"hrsh7th/nvim-cmp",
@@ -135,6 +123,7 @@ require("lazy").setup({
 				"hrsh7th/cmp-path",
 				"L3MON4D3/LuaSnip",
 				"saadparwaiz1/cmp_luasnip",
+				"onsails/lspkind.nvim",
 			},
 			config = function()
 				local cmp = require("cmp")
@@ -145,12 +134,21 @@ require("lazy").setup({
 						end,
 					},
 					mapping = cmp.mapping.preset.insert({
-						["<C-b>"] = cmp.mapping.scroll_docs(-4),
-						["<C-f>"] = cmp.mapping.scroll_docs(4),
-						["<C-Space>"] = cmp.mapping.complete(),
-						["<C-e>"] = cmp.mapping.abort(),
 						["<CR>"] = cmp.mapping.confirm({ select = true }),
 					}),
+					formatting = {
+						format = require("lspkind").cmp_format({
+							mode = "symbol_text", -- show icon + text
+							maxwidth = 50,
+							ellipsis_char = "...",
+							menu = {
+								nvim_lsp = "[LSP]",
+								luasnip = "[Snippet]",
+								buffer = "[Buffer]",
+								path = "[Path]",
+							},
+						}),
+					},
 					sources = cmp.config.sources({
 						{ name = "nvim_lsp" },
 						{ name = "luasnip" },
@@ -161,6 +159,7 @@ require("lazy").setup({
 				})
 			end,
 		},
+
 		-- toggleterm.nvim
 		{
 			"akinsho/toggleterm.nvim",
@@ -172,6 +171,8 @@ require("lazy").setup({
 				float_opts = { border = "curved" },
 			},
 		},
+
+		-- Status line
 		{
 			"nvim-lualine/lualine.nvim",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -189,8 +190,10 @@ require("lazy").setup({
 				},
 			},
 		},
-		-- Icons and Theme
+
+		-- Icons
 		{ "nvim-tree/nvim-web-devicons", opts = {} },
+
 		-- Theme
 		{
 			"rebelot/kanagawa.nvim",
@@ -204,16 +207,32 @@ require("lazy").setup({
 	checker = { enabled = false },
 })
 
--- Load Telescope extensions
-require("telescope").load_extension("file_browser")
+-- LSP setup
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+vim.lsp.config["*"] = vim.tbl_deep_extend("force", vim.lsp.config["*"] or {}, {
+	capabilities = capabilities,
+})
+
+vim.lsp.enable({ "lua_ls", "basedpyright" })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local bufnr = args.buf
+
+		-- Basic keymaps
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr })
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr })
+		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr })
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr })
+
+		-- Inlay hints
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end,
+})
+
+-- Diagnostics
+vim.diagnostic.config({ virtual_text = true })
 
 -- Keymaps
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>e", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
-
--- Diagnostics config
-vim.diagnostic.config({ virtual_text = true })
