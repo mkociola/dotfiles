@@ -18,6 +18,12 @@ Ensure you have the following installed
 - JetBrains Mono Nerd Font
 - Symbols Only Nerd Font
 
+## AI Tool Configuration
+
+This repository includes configuration files for AI coding assistants:
+
+- `.copilot/copilot-instructions.md` - GitHub Copilot instructions (includes "caveman" communication style)
+
 ## Installation
 
 First, check out the repository into your home directory
