@@ -7,7 +7,11 @@ Directory containing all of my configuration files
 Ensure you have the following installed
 
 - stow (a symlink farm manager)
-- ripgrep (neovim)
+- zsh
+- neovim
+- ghostty
+- ripgrep (telescope live grep)
+- make (required to build avante.nvim)
 
 ### Fonts
 
@@ -16,10 +20,10 @@ Ensure you have the following installed
 
 ## Installation
 
-First, check out the repository
+First, check out the repository into your home directory
 
 ```bash
-git clone git@github.com:mkociola/dotfiles.git
+git clone git@github.com:mkociola/dotfiles.git ~
 ```
 
 then use GNU stow to create the symlinks
