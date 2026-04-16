@@ -80,7 +80,7 @@ require("lazy").setup({
 			"mason-org/mason-lspconfig.nvim",
 			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
 			opts = {
-				ensure_installed = { "lua_ls", "basedpyright" },
+				ensure_installed = { "lua_ls" },
 			},
 		},
 		{ "neovim/nvim-lspconfig" },
@@ -265,7 +265,7 @@ vim.lsp.config["*"] = vim.tbl_deep_extend("force", vim.lsp.config["*"] or {}, {
 	capabilities = capabilities,
 })
 
-vim.lsp.enable({ "lua_ls", "basedpyright" })
+vim.lsp.enable({ "lua_ls" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
