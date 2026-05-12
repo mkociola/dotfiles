@@ -8,8 +8,8 @@ Personal configuration files, managed with GNU stow as per-tool packages.
 - zsh
 - neovim
 - ghostty
+- tmux (3.1+ for XDG config path)
 - ripgrep (telescope live grep)
-- make (required to build avante.nvim)
 
 ### Fonts
 
@@ -27,7 +27,7 @@ This repository includes configuration files for AI coding assistants:
 ```bash
 git clone git@github.com:mkociola/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow ghostty git nvim zsh
+stow ghostty git nvim tmux zsh
 ```
 
 Install only what you need — each top-level directory is an independent stow package:

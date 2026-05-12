@@ -9,6 +9,7 @@ dotfiles/
 ├── ghostty/   → ~/.config/ghostty/
 ├── git/       → ~/.config/git/
 ├── nvim/      → ~/.config/nvim/
+├── tmux/      → ~/.config/tmux/
 └── zsh/       → ~/.zshrc
 ```
 
@@ -19,7 +20,7 @@ A package directory mirrors the install target. Inside `nvim/`, the path is `nvi
 From repo root:
 
 ```bash
-stow ghostty git nvim zsh        # all
+stow ghostty git nvim tmux zsh   # all
 stow nvim                        # one
 stow -D nvim                     # uninstall
 stow -R nvim                     # restow after moving files
@@ -39,5 +40,18 @@ stow -R nvim                     # restow after moving files
 
 - Plugin manager: lazy.nvim, bootstrapped by `init.lua`.
 - `lazy-lock.json` is tracked — keeps plugin versions reproducible across machines.
-- LSP via mason + mason-lspconfig + nvim-lspconfig.
-- Completion: nvim-cmp with copilot, LSP, luasnip, buffer, path sources.
+- LSP: native `vim.lsp.config` + `vim.lsp.enable`; nvim-lspconfig ships server configs; mason + mason-tool-installer auto-installs server binaries by mason package name (e.g. `lua-language-server`, not `lua_ls`).
+- Completion: blink.cmp with copilot, LSP, snippets, buffer, path sources.
+- File explorer: oil.nvim. netrw disabled at top of `init.lua`.
+
+## Tmux
+
+- Config: `~/.config/tmux/tmux.conf` (XDG-style; tmux 3.1+).
+- Plugin manager: tpm. First-time setup:
+  ```bash
+  git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+  tmux              # launch, then press: prefix + I    (capital i to install)
+  ```
+- Plugins: tmux-sensible, tmux-yank, tmux-resurrect, tmux-continuum (auto-save/restore).
+- Theme: tokyonight-night palette inline (matches nvim). No theme plugin.
+- `~/.config/tmux/plugins/` is not tracked.
