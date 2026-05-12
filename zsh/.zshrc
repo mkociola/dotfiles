@@ -8,3 +8,5 @@ setopt HIST_IGNORE_DUPS
 # Enable colors
 alias ls="ls -G"
 alias grep="grep --color=auto"
+
+. "$HOME/.local/bin/env"
