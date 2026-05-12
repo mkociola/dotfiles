@@ -37,4 +37,15 @@ stow nvim          # just neovim
 stow -D ghostty    # uninstall ghostty package
 ```
 
+### Tmux setup
+
+After stowing the `tmux` package:
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+```
+
+Or inside a tmux session: `prefix + I` (capital i) to install plugins.
+
 See [CLAUDE.md](CLAUDE.md) for layout and conventions.
