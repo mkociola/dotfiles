@@ -16,12 +16,6 @@ Personal configuration files, managed with GNU stow as per-tool packages.
 - JetBrains Mono Nerd Font
 - Symbols Only Nerd Font
 
-## AI Tool Configuration
-
-This repository includes configuration files for AI coding assistants:
-
-- `.copilot/copilot-instructions.md` - GitHub Copilot instructions (includes "caveman" communication style)
-
 ## Install
 
 ```bash
