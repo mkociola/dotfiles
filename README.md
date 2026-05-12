@@ -1,12 +1,10 @@
 # dotfiles
 
-Directory containing all of my configuration files
+Personal configuration files, managed with GNU stow as per-tool packages.
 
 ## Requirements
 
-Ensure you have the following installed
-
-- stow (a symlink farm manager)
+- [stow](https://www.gnu.org/software/stow/) — symlink farm manager
 - zsh
 - neovim
 - ghostty
@@ -24,18 +22,19 @@ This repository includes configuration files for AI coding assistants:
 
 - `.copilot/copilot-instructions.md` - GitHub Copilot instructions (includes "caveman" communication style)
 
-## Installation
-
-First, check out the repository into your home directory
+## Install
 
 ```bash
-git clone git@github.com:mkociola/dotfiles.git ~
+git clone git@github.com:mkociola/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+stow fish ghostty git nvim zsh
 ```
 
-then use GNU stow to create the symlinks
+Install only what you need — each top-level directory is an independent stow package:
 
 ```bash
-stow .
+stow nvim          # just neovim
+stow -D ghostty    # uninstall ghostty package
 ```
 
-good to go :)
+See [CLAUDE.md](CLAUDE.md) for layout and conventions.

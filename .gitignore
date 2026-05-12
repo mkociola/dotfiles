@@ -1,0 +1,4 @@
+# Secrets / state — never track
+**/github-copilot/
+**/uv/uv-receipt.json
+**/.claude/settings.local.json
