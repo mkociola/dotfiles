@@ -9,4 +9,5 @@ setopt HIST_IGNORE_DUPS
 alias ls="ls -G"
 alias grep="grep --color=auto"
 
-. "$HOME/.local/bin/env"
+# Per-machine overrides (not tracked)
+[ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"

@@ -33,6 +33,7 @@ stow -R nvim                     # restow after moving files
 - **Lua** (`nvim/`): 2-space indent, formatted by stylua via conform.nvim `format_on_save`.
 - **No secrets in repo.** `.config/github-copilot/` (OAuth tokens) and `uv-receipt.json` are gitignored. Copilot re-auths from nvim on first use.
 - **Adding a new tool**: create `<tool>/.config/<tool>/...` (or `<tool>/.<dotfile>` for `$HOME`-level files). Don't reintroduce a single flat package.
+- **Per-machine config**: tracked `zsh/.zshrc` sources `~/.zshrc.local` at the end if present. Put machine-specific lines (uv env source, work paths, proxies, secrets) there — `~/.zshrc.local` is never tracked. If an installer mutates `zsh/.zshrc`, move its line into `~/.zshrc.local` and `git checkout zsh/.zshrc`.
 
 ## Nvim
 
