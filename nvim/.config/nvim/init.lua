@@ -1,3 +1,7 @@
+-- Disable netrw (oil.nvim is the file explorer)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -49,38 +53,40 @@ require("lazy").setup({
 			tag = "0.1.8",
 			dependencies = {
 				"nvim-lua/plenary.nvim",
-				"nvim-telescope/telescope-file-browser.nvim",
 				"nvim-telescope/telescope-ui-select.nvim",
 			},
-			opts = {
-				extensions = {
-					file_browser = {
-						hijack_netrw = true,
-						sorting_strategy = "ascending",
-					},
-				},
-			},
 			config = function()
-				-- Load extensions
-				require("telescope").load_extension("file_browser")
 				require("telescope").load_extension("ui-select")
 
-				-- Keymaps
 				local builtin = require("telescope.builtin")
 				vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 				vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 				vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-				vim.keymap.set("n", "<leader>e", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
 			end,
 		},
 
-		-- LSP
-		{ "mason-org/mason.nvim", config = true },
+		-- File explorer
 		{
-			"mason-org/mason-lspconfig.nvim",
-			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
+			"stevearc/oil.nvim",
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+			lazy = false,
 			opts = {
-				ensure_installed = { "lua_ls" },
+				default_file_explorer = true,
+				view_options = { show_hidden = true },
+			},
+			keys = {
+				{ "-", "<cmd>Oil<CR>", desc = "Open parent directory" },
+				{ "<leader>e", "<cmd>Oil<CR>", desc = "Open parent directory" },
+			},
+		},
+
+		-- LSP
+		{ "mason-org/mason.nvim", opts = {} },
+		{
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			dependencies = { "mason-org/mason.nvim" },
+			opts = {
+				ensure_installed = { "lua-language-server", "stylua" },
 			},
 		},
 		{ "neovim/nvim-lspconfig" },
@@ -114,51 +120,48 @@ require("lazy").setup({
 		-- Mini.surround
 		{ "echasnovski/mini.surround", version = false, opts = {} },
 
-		-- nvim-cmp
+		-- Completion
 		{
-			"hrsh7th/nvim-cmp",
+			"saghen/blink.cmp",
+			version = "1.*",
 			dependencies = {
-				"hrsh7th/cmp-nvim-lsp",
-				"hrsh7th/cmp-buffer",
-				"hrsh7th/cmp-path",
-				"L3MON4D3/LuaSnip",
-				"saadparwaiz1/cmp_luasnip",
-				"onsails/lspkind.nvim",
+				"rafamadriz/friendly-snippets",
+				"fang2hou/blink-copilot",
 			},
-			config = function()
-				local cmp = require("cmp")
-				cmp.setup({
-					snippet = {
-						expand = function(args)
-							require("luasnip").lsp_expand(args.body)
-						end,
-					},
-					mapping = cmp.mapping.preset.insert({
-						["<CR>"] = cmp.mapping.confirm(),
-					}),
-					formatting = {
-						format = require("lspkind").cmp_format({
-							mode = "symbol_text", -- show icon + text
-							maxwidth = 50,
-							ellipsis_char = "...",
-							menu = {
-								nvim_lsp = "[LSP]",
-								luasnip = "[Snippet]",
-								buffer = "[Buffer]",
-								path = "[Path]",
+			opts = {
+				keymap = { preset = "default" },
+				appearance = { nerd_font_variant = "mono" },
+				completion = {
+					documentation = { auto_show = true },
+					menu = {
+						draw = {
+							columns = {
+								{ "label", "label_description", gap = 1 },
+								{ "kind_icon", "kind", gap = 1 },
 							},
-						}),
+						},
 					},
-					sources = cmp.config.sources({
-						{ name = "copilot" },
-						{ name = "nvim_lsp" },
-						{ name = "luasnip" },
-					}, {
-						{ name = "buffer" },
-						{ name = "path" },
-					}),
-				})
-			end,
+				},
+				sources = {
+					default = { "copilot", "lsp", "path", "snippets", "buffer" },
+					providers = {
+						copilot = {
+							name = "copilot",
+							module = "blink-copilot",
+							score_offset = 100,
+							async = true,
+						},
+					},
+				},
+				fuzzy = { implementation = "prefer_rust_with_warning" },
+			},
+		},
+
+		-- Which-key
+		{
+			"folke/which-key.nvim",
+			event = "VeryLazy",
+			opts = { preset = "modern" },
 		},
 
 		-- toggleterm.nvim
@@ -209,7 +212,7 @@ require("lazy").setup({
 			end,
 		},
 
-		-- AI stuff
+		-- Copilot
 		{
 			"zbirenbaum/copilot.lua",
 			cmd = "Copilot",
@@ -221,46 +224,12 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{
-			"zbirenbaum/copilot-cmp",
-			dependencies = { "zbirenbaum/copilot.lua" },
-			config = function()
-				require("copilot_cmp").setup()
-			end,
-		},
-		{
-			"yetone/avante.nvim",
-			event = "VeryLazy",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"MunifTanjim/nui.nvim",
-				"nvim-tree/nvim-web-devicons",
-				"MeanderingProgrammer/render-markdown.nvim",
-			},
-			build = "make",
-			config = function(_, opts)
-				require("avante_lib").load()
-
-				require("render-markdown").setup({
-					file_types = { "markdown", "Avante" },
-				})
-
-				require("avante").setup({
-					provider = "copilot",
-				})
-
-				vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>AvanteAsk<CR>", { desc = "Avante: Toggle Chat" })
-				vim.keymap.set({ "n", "v" }, "<leader>ae", "<cmd>AvanteEdit<CR>", { desc = "Avante: Edit selection" })
-				vim.keymap.set({ "n", "v" }, "<leader>ar", "<cmd>AvanteRefresh<CR>", { desc = "Avante: Refresh" })
-				vim.keymap.set({ "n", "v" }, "<leader>af", "<cmd>AvanteFocus<CR>", { desc = "Avante: Focus chat" })
-			end,
-		},
 	},
 	checker = { enabled = false },
 })
 
 -- LSP setup
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 vim.lsp.config["*"] = vim.tbl_deep_extend("force", vim.lsp.config["*"] or {}, {
 	capabilities = capabilities,
 })
