@@ -6,7 +6,6 @@ Personal dotfiles, managed with GNU stow. Each top-level directory is a stow pac
 
 ```
 dotfiles/
-├── fish/      → ~/.config/fish/
 ├── ghostty/   → ~/.config/ghostty/
 ├── git/       → ~/.config/git/
 ├── nvim/      → ~/.config/nvim/
@@ -20,7 +19,7 @@ A package directory mirrors the install target. Inside `nvim/`, the path is `nvi
 From repo root:
 
 ```bash
-stow fish ghostty git nvim zsh   # all
+stow ghostty git nvim zsh        # all
 stow nvim                        # one
 stow -D nvim                     # uninstall
 stow -R nvim                     # restow after moving files
