@@ -1,4 +1,4 @@
--- Disable netrw (oil.nvim is the file explorer)
+-- Disable netrw (telescope-file-browser is the file explorer)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -53,31 +53,33 @@ require("lazy").setup({
 			tag = "0.1.8",
 			dependencies = {
 				"nvim-lua/plenary.nvim",
+				"nvim-telescope/telescope-file-browser.nvim",
 				"nvim-telescope/telescope-ui-select.nvim",
 			},
-			config = function()
+			opts = {
+				extensions = {
+					file_browser = {
+						hijack_netrw = false,
+						sorting_strategy = "ascending",
+					},
+				},
+			},
+			config = function(_, opts)
+				require("telescope").setup(opts)
+				require("telescope").load_extension("file_browser")
 				require("telescope").load_extension("ui-select")
 
 				local builtin = require("telescope.builtin")
 				vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 				vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 				vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+				vim.keymap.set(
+					"n",
+					"<leader>e",
+					":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+					{ desc = "File browser" }
+				)
 			end,
-		},
-
-		-- File explorer
-		{
-			"stevearc/oil.nvim",
-			dependencies = { "nvim-tree/nvim-web-devicons" },
-			lazy = false,
-			opts = {
-				default_file_explorer = true,
-				view_options = { show_hidden = true },
-			},
-			keys = {
-				{ "-", "<cmd>Oil<CR>", desc = "Open parent directory" },
-				{ "<leader>e", "<cmd>Oil<CR>", desc = "Open parent directory" },
-			},
 		},
 
 		-- LSP
