@@ -6,6 +6,7 @@ Personal dotfiles, managed with GNU stow. Each top-level directory is a stow pac
 
 ```
 dotfiles/
+├── claude/    → ~/.claude/
 ├── ghostty/   → ~/.config/ghostty/
 ├── git/       → ~/.config/git/
 ├── nvim/      → ~/.config/nvim/
@@ -20,10 +21,10 @@ A package directory mirrors the install target. Inside `nvim/`, the path is `nvi
 From repo root:
 
 ```bash
-stow ghostty git nvim tmux zsh   # all
-stow nvim                        # one
-stow -D nvim                     # uninstall
-stow -R nvim                     # restow after moving files
+stow claude ghostty git nvim tmux zsh   # all
+stow nvim                               # one
+stow -D nvim                            # uninstall
+stow -R nvim                            # restow after moving files
 ```
 
 `.stow-local-ignore` keeps `README.md`, `CLAUDE.md`, `.git*` out of `$HOME`.
@@ -55,3 +56,12 @@ stow -R nvim                     # restow after moving files
 - Plugins: tmux-sensible, tmux-yank, tmux-resurrect, tmux-continuum (auto-save/restore).
 - Theme: tokyonight-night palette inline (matches nvim). No theme plugin.
 - `~/.config/tmux/plugins/` is not tracked.
+
+## Claude Code
+
+- Package: `claude/.claude/` → `~/.claude/` (global, applies to every project).
+- `CLAUDE.md` — global instructions: attribution, Conventional Commits, be concise.
+- `settings.json` — durable prefs only. Machine/account state (model, `effortLevel`, `tui`,
+  enabled plugins, marketplaces) stays untracked in `~/.claude/settings.local.json` — same
+  split as `~/.zshrc.local`, gitignored via `**/.claude/settings.local.json`.
+- Rest of `~/.claude/` (sessions, history, plugins cache, telemetry) is state — never track it.
