@@ -61,6 +61,8 @@ stow -R nvim                            # restow after moving files
 
 - Package: `claude/.claude/` → `~/.claude/` (global, applies to every project).
 - `CLAUDE.md` — global instructions: attribution, Conventional Commits, be concise.
+- `commands/commit.md` — `/commit`, which splits the current changes into Conventional
+  Commits and pushes to the current branch (`/commit branch [name]` for a new one).
 - `settings.json` — durable prefs only. Machine/account state (model, `effortLevel`, `tui`,
   enabled plugins, marketplaces) stays untracked in `~/.claude/settings.local.json` — same
   split as `~/.zshrc.local`, gitignored via `**/.claude/settings.local.json`.
