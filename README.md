@@ -58,4 +58,30 @@ account-specific values are **not** tracked — after stowing on a new machine, 
 
 Plugins and marketplaces are re-enabled from Claude Code itself and land in the same file.
 
+On a machine that talks to Bedrock instead of a subscription (work), the same untracked file
+carries the gateway config — everything tracked in the repo stays identical:
+
+```json
+{
+  "model": "eu.anthropic.claude-sonnet-4-5",
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "AWS_REGION": "eu-central-1"
+  },
+  "awsAuthRefresh": "aws sso login --profile work"
+}
+```
+
+AWS credentials come from the normal AWS toolchain (`AWS_PROFILE` in `~/.zshrc.local`);
+`awsAuthRefresh` is optional — set it if the account uses SSO so expired credentials
+re-login automatically.
+
+MCP servers live in `~/.claude.json` (session state, never tracked) — re-add them on a new
+machine:
+
+```bash
+claude mcp add context7 -s user -- npx -y @upstash/context7-mcp@4.0.4
+claude mcp add playwright -s user -- npx -y @playwright/mcp@0.0.80
+```
+
 See [CLAUDE.md](CLAUDE.md) for layout and conventions.

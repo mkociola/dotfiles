@@ -60,9 +60,15 @@ stow -R nvim                            # restow after moving files
 ## Claude Code
 
 - Package: `claude/.claude/` → `~/.claude/` (global, applies to every project).
-- `CLAUDE.md` — global instructions: attribution, Conventional Commits, be concise.
+- `CLAUDE.md` — global instructions: attribution, Conventional Commits, style (concise,
+  answer-first, `Action required:` list when something needs me), and a "run with it"
+  autonomy trigger. Keep it lean — always-on behavioral rules are the thing that degrades
+  responses, so every addition earns its place.
 - `commands/commit.md` — `/commit`, which splits the current changes into Conventional
   Commits and pushes to the current branch (`/commit branch [name]` for a new one).
+- `commands/review.md` — `/review [PR# | url | branch]`, a review weighted to architecture and
+  KISS over style, with a strict false-positive filter. On a PR it walks findings one at a time,
+  drafts a comment for each, and posts the approved ones as one `COMMENT` review — never a verdict.
 - `settings.json` — durable prefs only. Machine/account state (model, `effortLevel`, `tui`,
   enabled plugins, marketplaces) stays untracked in `~/.claude/settings.local.json` — same
   split as `~/.zshrc.local`, gitignored via `**/.claude/settings.local.json`.
