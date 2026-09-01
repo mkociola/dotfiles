@@ -38,5 +38,8 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[4;38;2;187;154;247m'
 export LESS_TERMCAP_ue=$'\e[0m'
 
+# Claude Code with permission prompts disabled — trusted work only
+alias yolo="claude --dangerously-skip-permissions"
+
 # Per-machine overrides (not tracked)
 [ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"
