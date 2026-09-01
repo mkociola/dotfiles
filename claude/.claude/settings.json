@@ -1,5 +1,11 @@
 {
   "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": false,
+    "pr": false,
+    "sessionUrl": false
+  },
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipWorkflowUsageWarning": true
 }
