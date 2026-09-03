@@ -66,9 +66,9 @@ stow -R nvim                            # restow after moving files
   responses, so every addition earns its place.
 - `commands/commit.md` — `/commit`, which splits the current changes into Conventional
   Commits and pushes to the current branch (`/commit branch [name]` for a new one).
-- `commands/review.md` — `/review [PR# | url | branch]`, a review weighted to architecture and
-  KISS over style, with a strict false-positive filter. On a PR it walks findings one at a time,
-  drafts a comment for each, and posts the approved ones as one `COMMENT` review — never a verdict.
+- `commands/design.md` — `/design [PR# | url | branch]`, the design and simplicity pass
+  `/code-review` lacks: architecture and KISS only, refute-first filter, no bug hunting. Runs as a
+  background fork pinned to `xhigh`. Pair it with `/code-review`.
 - `settings.json` — durable prefs only. Machine/account state (model, `effortLevel`, `tui`,
   enabled plugins, marketplaces) stays untracked in `~/.claude/settings.local.json` — same
   split as `~/.zshrc.local`, gitignored via `**/.claude/settings.local.json`.
