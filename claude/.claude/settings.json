@@ -1,4 +1,8 @@
 {
+  "model": "opus[1m]",
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "theme": "dark",
   "permissions": {
     "allow": [
       "Bash(gh *)"
@@ -15,7 +19,6 @@
     "pr": "",
     "sessionUrl": false
   },
-  "theme": "dark",
   "agentPushNotifEnabled": true,
   "skipWorkflowUsageWarning": true
 }
