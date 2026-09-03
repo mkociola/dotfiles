@@ -1,8 +1,9 @@
 {
-  "model": "opus[1m]",
-  "effortLevel": "high",
-  "tui": "fullscreen",
-  "theme": "dark",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "Bash(gh *)"
@@ -14,11 +15,10 @@
       "Bash(gh auth refresh *)"
     ]
   },
-  "attribution": {
-    "commit": "",
-    "pr": "",
-    "sessionUrl": false
-  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
   "agentPushNotifEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "model": "us.anthropic.claude-sonnet-5"
 }
