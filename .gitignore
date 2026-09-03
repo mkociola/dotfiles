@@ -22,3 +22,6 @@ claude/.claude/todos/
 # Work-machine skills and commands: employer-internal project keys, hostnames, URLs.
 claude/.claude/skills/jira-ticket/
 claude/.claude/commands/jira-learn.md
+
+# tmux plugins installed by tpm, not tracked
+tmux/.config/tmux/plugins/
