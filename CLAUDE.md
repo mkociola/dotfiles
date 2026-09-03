@@ -21,11 +21,18 @@ A package directory mirrors the install target. Inside `nvim/`, the path is `nvi
 From repo root:
 
 ```bash
-stow claude ghostty git nvim tmux zsh   # all
+stow ghostty git nvim tmux zsh          # all but claude
+stow --no-folding claude                # claude: see below, never plain `stow claude`
 stow nvim                               # one
 stow -D nvim                            # uninstall
 stow -R nvim                            # restow after moving files
 ```
+
+`claude` needs `--no-folding`. Without it stow makes `~/.claude` a single symlink to
+`claude/.claude/`, and then everything Claude Code writes at runtime (session transcripts,
+prompt history, skills, caches) physically lands in this working tree. On a work machine that
+puts confidential material one `git add -f` away from a public push. With `--no-folding`,
+`~/.claude` stays a real local directory and only the tracked files are symlinked into it.
 
 `.stow-local-ignore` keeps `README.md`, `CLAUDE.md`, `.git*` out of `$HOME`.
 
@@ -77,4 +84,17 @@ stow -R nvim                            # restow after moving files
   the desktop app). Create it on a machine that needs its own hooks, env, or permissions.
 - Per-machine MCP servers: `claude mcp add --scope user …` stores them in `~/.claude.json`,
   which lives outside the package and is never tracked.
+- **Stowed with `--no-folding`**, see Install. `~/.claude` is a real local directory and only
+  `CLAUDE.md`, `settings.json` and the two `commands/*.md` are symlinks into the repo, so
+  nothing Claude Code generates at runtime touches this working tree. Verify with
+  `find claude -mindepth 1`: two directories and four files, nothing else, ever. The
+  `.gitignore` entries for `claude/.claude/` state are a backstop in case the fold ever comes
+  back.
+- Per-machine skills and commands: anything with employer-internal detail (project keys,
+  hostnames, internal URLs) is simply left unstowed in `~/.claude/skills/<name>/` or
+  `~/.claude/commands/`, which is now genuinely outside the repo. This machine has
+  `skills/jira-ticket/` (Jira house style per project, plus a `PostToolUse` hook that logs
+  filed tickets) and `commands/jira-learn.md` (diffs those tickets against their current state
+  and folds repeated edits back into the skill). To share a skill, add it under
+  `claude/.claude/skills/` and restow.
 - Rest of `~/.claude/` (sessions, history, plugins cache, telemetry) is state — never track it.

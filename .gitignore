@@ -2,3 +2,23 @@
 **/github-copilot/
 **/uv/uv-receipt.json
 **/.claude/settings.local.json
+
+# Claude Code state. The claude package is stowed with --no-folding, so this state normally
+# lives in a real ~/.claude outside the repo and none of these paths exist here. Kept as a
+# backstop: a plain `stow claude` would re-fold ~/.claude into this tree, and session
+# transcripts must never reach a public repo.
+claude/.claude/.last-*
+claude/.claude/backups/
+claude/.claude/cache/
+claude/.claude/file-history/
+claude/.claude/history.jsonl
+claude/.claude/projects/
+claude/.claude/session-env/
+claude/.claude/sessions/
+claude/.claude/shell-snapshots/
+claude/.claude/statsig/
+claude/.claude/todos/
+
+# Work-machine skills and commands: employer-internal project keys, hostnames, URLs.
+claude/.claude/skills/jira-ticket/
+claude/.claude/commands/jira-learn.md

@@ -21,14 +21,22 @@ Personal configuration files, managed with GNU stow as per-tool packages.
 ```bash
 git clone git@github.com:mkociola/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow claude ghostty git nvim tmux zsh
+stow ghostty git nvim tmux zsh
+stow --no-folding claude
 ```
+
+The `claude` package must be stowed with `--no-folding`. A plain `stow claude` turns
+`~/.claude` into one symlink pointing at `claude/.claude/`, which makes this repo the place
+Claude Code writes session transcripts, prompt history and caches at runtime. With
+`--no-folding`, `~/.claude` stays a real local directory and only the tracked files are
+linked into it.
 
 Install only what you need — each top-level directory is an independent stow package:
 
 ```bash
-stow nvim          # just neovim
-stow -D ghostty    # uninstall ghostty package
+stow nvim                   # just neovim
+stow --no-folding claude    # claude always takes the flag, including on restow
+stow -D ghostty             # uninstall ghostty package
 ```
 
 ### Tmux setup
@@ -45,10 +53,14 @@ Or inside a tmux session: `prefix + I` (capital i) to install plugins.
 ### Claude Code setup
 
 The `claude` package stows global settings and instructions into `~/.claude/`. Every generic
-preference — model, effort, `tui`, theme, permissions, attribution — is tracked in
-`claude/.claude/settings.json`, so a fresh machine needs nothing beyond `stow claude`. When
-Claude Code itself writes into that file (plugin installs, marketplaces), commit the change or
-`git checkout` it.
+preference (model, effort, `tui`, theme, permissions, attribution) is tracked in
+`claude/.claude/settings.json`, so a fresh machine needs nothing beyond
+`stow --no-folding claude`. When Claude Code itself writes into that file (plugin installs,
+marketplaces), commit the change or `git checkout` it.
+
+Anything machine-specific and private, a skill with an employer's internal hostnames for
+instance, is simply not stowed: put it straight in `~/.claude/skills/<name>/` or
+`~/.claude/commands/`, where it stays outside the repo.
 
 Claude Code reads no user-level local settings file, so per-machine overrides go in
 `~/.claude/settings.local.json` and `zsh/.zshrc` passes it with `--settings` whenever it exists.
