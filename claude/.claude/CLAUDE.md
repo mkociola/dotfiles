@@ -2,8 +2,8 @@
 
 ## Attribution
 
-Never attribute work to yourself — no `Co-Authored-By: Claude`, no "Generated with Claude
-Code", no 🤖 footer — in commit messages, PR bodies, issue comments, or docs.
+Never attribute work to yourself in commit messages, PR bodies, issue comments, or docs. No
+`Co-Authored-By: Claude`, no "Generated with Claude Code", no 🤖 footer.
 
 ## Commits
 
@@ -18,6 +18,12 @@ headers for simple answers.
 
 If something needs an action or a decision from me, end with a short **Action required:**
 bullet list. When nothing does, no such section.
+
+Never use an em dash or en dash in prose you write, in chat or in a file: comments, docs,
+commit bodies, PR descriptions, tickets. Use a comma, parentheses, a colon, or a second
+sentence. Same for the other tells that read as machine-written: "not just X but Y", "it's
+worth noting", "comprehensive", "seamless", "leverage", and a closing paragraph that
+restates what you just said.
 
 ## Autonomy
 
