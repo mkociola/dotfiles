@@ -1,4 +1,15 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(gh *)"
+    ],
+    "deny": [
+      "Bash(gh repo delete *)",
+      "Bash(gh repo edit *)",
+      "Bash(gh secret *)",
+      "Bash(gh auth refresh *)"
+    ]
+  },
   "attribution": {
     "commit": "",
     "pr": "",
