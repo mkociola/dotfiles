@@ -44,22 +44,16 @@ Or inside a tmux session: `prefix + I` (capital i) to install plugins.
 
 ### Claude Code setup
 
-The `claude` package stows global settings and instructions into `~/.claude/`. Machine- and
-account-specific values are **not** tracked — after stowing on a new machine, create
-`~/.claude/settings.local.json`:
+The `claude` package stows global settings and instructions into `~/.claude/`. Every generic
+preference — model, effort, `tui`, theme, permissions, attribution — is tracked in
+`claude/.claude/settings.json`, so a fresh machine needs nothing beyond `stow claude`. When
+Claude Code itself writes into that file (plugin installs, marketplaces), commit the change or
+`git checkout` it.
 
-```json
-{
-  "model": "opus[1m]",
-  "effortLevel": "high",
-  "tui": "fullscreen"
-}
-```
-
-Plugins and marketplaces are re-enabled from Claude Code itself and land in the same file.
-
-On a machine that talks to Bedrock instead of a subscription (work), the same untracked file
-carries the gateway config — everything tracked in the repo stays identical:
+Claude Code reads no user-level local settings file, so per-machine overrides go in
+`~/.claude/settings.local.json` and `zsh/.zshrc` passes it with `--settings` whenever it exists.
+That flag outranks user and project settings, so a key set there wins. Create the file only on a
+machine that needs one; on a machine that talks to Bedrock instead of a subscription (work):
 
 ```json
 {
@@ -76,8 +70,13 @@ AWS credentials come from the normal AWS toolchain (`AWS_PROFILE` in `~/.zshrc.l
 `awsAuthRefresh` is optional — set it if the account uses SSO so expired credentials
 re-login automatically.
 
-MCP servers live in `~/.claude.json` (session state, never tracked) — re-add them on a new
-machine:
+The alias reaches terminal sessions only. The desktop app launches the binary directly, and the
+one untracked file it also honors is managed settings at
+`/Library/Application Support/ClaudeCode/managed-settings.json` (needs sudo, outranks everything,
+can't be overridden per project).
+
+MCP servers live in `~/.claude.json` (never tracked), so a server only one machine needs is
+simply added there with `-s user`. Re-add the shared ones on a new machine:
 
 ```bash
 claude mcp add context7 -s user -- npx -y @upstash/context7-mcp@4.0.4

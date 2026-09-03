@@ -69,7 +69,12 @@ stow -R nvim                            # restow after moving files
 - `commands/design.md` — `/design [PR# | url | branch]`, the design and simplicity pass
   `/code-review` lacks: architecture and KISS only, refute-first filter, no bug hunting. Runs as a
   background fork pinned to `xhigh`. Pair it with `/code-review`.
-- `settings.json` — durable prefs only. Machine/account state (model, `effortLevel`, `tui`,
-  enabled plugins, marketplaces) stays untracked in `~/.claude/settings.local.json` — same
-  split as `~/.zshrc.local`, gitignored via `**/.claude/settings.local.json`.
+- `settings.json` — every generic preference: model, effort, `tui`, theme, permissions,
+  attribution. If Claude Code writes machine state into it (plugin installs, marketplaces),
+  commit it or `git checkout` it — same rule as `zsh/.zshrc`.
+- Per-machine settings: Claude Code has no user-level local file, so `zsh/.zshrc` passes
+  `~/.claude/settings.local.json` via `--settings` when it exists (terminal sessions only, not
+  the desktop app). Create it on a machine that needs its own hooks, env, or permissions.
+- Per-machine MCP servers: `claude mcp add --scope user …` stores them in `~/.claude.json`,
+  which lives outside the package and is never tracked.
 - Rest of `~/.claude/` (sessions, history, plugins cache, telemetry) is state — never track it.
