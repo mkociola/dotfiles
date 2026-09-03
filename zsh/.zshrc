@@ -41,5 +41,8 @@ export LESS_TERMCAP_ue=$'\e[0m'
 # Claude Code with permission prompts disabled — trusted work only
 alias yolo="claude --dangerously-skip-permissions"
 
+# Per-machine Claude Code settings (not tracked, loaded only when present) — see CLAUDE.md
+[ -f "$HOME/.claude/settings.local.json" ] && alias claude="claude --settings $HOME/.claude/settings.local.json"
+
 # Per-machine overrides (not tracked)
 [ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"
