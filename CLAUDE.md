@@ -47,6 +47,12 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 ## Nvim
 
 - Plugin manager: lazy.nvim, bootstrapped by `init.lua`.
+- Treesitter: nvim-treesitter **`main` branch**, which needs nvim 0.12+ and the `tree-sitter`
+  CLI on PATH (`brew install tree-sitter-cli`). The `master` branch is frozen at nvim 0.11 and
+  its queries crash 0.12 (`attempt to call method 'range'` on markdown), so don't move back.
+  `main` ships no modules: parsers come from an explicit `ts.install({...})` list (no
+  `auto_install`), and highlight plus indent are turned on per buffer by the `FileType`
+  autocmd in the plugin spec. Add a language by adding it to that list, then `:TSUpdate`.
 - `lazy-lock.json` is tracked — keeps plugin versions reproducible across machines.
 - LSP: native `vim.lsp.config` + `vim.lsp.enable`; nvim-lspconfig ships server configs; mason + mason-tool-installer auto-installs server binaries by mason package name (e.g. `lua-language-server`, not `lua_ls`).
 - Completion: blink.cmp with copilot, LSP, snippets, buffer, path sources.
