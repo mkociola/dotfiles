@@ -38,13 +38,49 @@ require("lazy").setup({
 		-- Treesitter
 		{
 			"nvim-treesitter/nvim-treesitter",
+			branch = "main",
+			lazy = false,
 			build = ":TSUpdate",
-			main = "nvim-treesitter.configs",
-			opts = {
-				auto_install = true,
-				highlight = { enable = true },
-				indent = { enable = true },
-			},
+			config = function()
+				local ts = require("nvim-treesitter")
+				ts.setup({})
+				vim.treesitter.language.register("json", "jsonc")
+				ts.install({
+					"astro",
+					"bash",
+					"c",
+					"css",
+					"dockerfile",
+					"gitignore",
+					"javascript",
+					"json",
+					"lua",
+					"make",
+					"markdown",
+					"markdown_inline",
+					"python",
+					"toml",
+					"typescript",
+					"vim",
+					"vimdoc",
+					"vue",
+					"xml",
+					"yaml",
+				})
+
+				-- The main branch enables nothing by itself: highlighting is Neovim's,
+				-- indentation is the plugin's, both are per-buffer.
+				vim.api.nvim_create_autocmd("FileType", {
+					callback = function(args)
+						local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+						if not lang or not pcall(vim.treesitter.language.add, lang) then
+							return
+						end
+						vim.treesitter.start(args.buf, lang)
+						vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end,
+				})
+			end,
 		},
 
 		-- Telescope
