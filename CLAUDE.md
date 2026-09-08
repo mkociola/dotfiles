@@ -85,6 +85,25 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 - `settings.json` — every generic preference: model, effort, `tui`, theme, permissions,
   attribution. If Claude Code writes machine state into it (plugin installs, marketplaces),
   commit it or `git checkout` it — same rule as `zsh/.zshrc`.
+- Plugins: installed with `claude plugin install <plugin>@<marketplace> --scope user`, which
+  writes `extraKnownMarketplaces` and `enabledPlugins` into `settings.json`. Those two keys are
+  the whole install, so committing them is how a plugin reaches the other machine: it clones
+  itself into `~/.claude/plugins/` (state, untracked) on first launch there. Installed so far:
+  [humanizer](https://github.com/blader/humanizer), which rewrites AI-sounding prose, as
+  `/humanizer:humanizer` (plugin skills are always namespaced). Third-party marketplaces have
+  auto-update off by default, so pull upstream fixes with
+  `claude plugin marketplace update humanizer`.
+  Claude Desktop shares none of this: no `settings.json`, no marketplaces, no
+  `~/.claude/skills`. A skill gets there only as a zip upload under Settings > Capabilities >
+  Skills, which is a per-machine manual step and nothing this repo can do for you. The zip needs
+  one folder with `SKILL.md` at its root, so a marketplace clone can't be zipped as-is
+  (`~/.claude/plugins/cache/<name>/<name>/<version>/` nests it a level too deep):
+
+  ```bash
+  mkdir -p /tmp/hz/humanizer
+  cp ~/.claude/plugins/cache/humanizer/humanizer/3.0.0/{SKILL.md,LICENSE,README.md} /tmp/hz/humanizer/
+  cd /tmp/hz && zip -rq /tmp/humanizer-skill.zip humanizer
+  ```
 - Per-machine settings: Claude Code has no user-level local file, so `zsh/.zshrc` passes
   `~/.claude/settings.local.json` via `--settings` when it exists (terminal sessions only, not
   the desktop app). Create it on a machine that needs its own hooks, env, or permissions.

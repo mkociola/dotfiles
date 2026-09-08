@@ -12,6 +12,7 @@ claude/.claude/backups/
 claude/.claude/cache/
 claude/.claude/file-history/
 claude/.claude/history.jsonl
+claude/.claude/plugins/
 claude/.claude/projects/
 claude/.claude/session-env/
 claude/.claude/sessions/
@@ -20,6 +21,7 @@ claude/.claude/statsig/
 claude/.claude/todos/
 
 # Work-machine skills and commands: employer-internal project keys, hostnames, URLs.
+claude/.claude/skills/gta/
 claude/.claude/skills/jira-ticket/
 claude/.claude/commands/jira-learn.md
 

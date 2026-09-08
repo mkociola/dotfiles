@@ -15,10 +15,21 @@
       "Bash(gh auth refresh *)"
     ]
   },
+  "extraKnownMarketplaces": {
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
+      }
+    }
+  },
   "effortLevel": "high",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "agentPushNotifEnabled": true,
-  "model": "us.anthropic.claude-sonnet-5"
+  "model": "us.anthropic.claude-sonnet-5",
+  "enabledPlugins": {
+    "humanizer@humanizer": true
+  }
 }
