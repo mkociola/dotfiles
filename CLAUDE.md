@@ -53,6 +53,11 @@ puts confidential material one `git add -f` away from a public push. With `--no-
   `main` ships no modules: parsers come from an explicit `ts.install({...})` list (no
   `auto_install`), and highlight plus indent are turned on per buffer by the `FileType`
   autocmd in the plugin spec. Add a language by adding it to that list, then `:TSUpdate`.
+  A machine that still has the old `master` checkout keeps it: lazy.nvim's startup only clones
+  plugins that are missing and never switches a checkout's branch, and `master` exports no
+  `install`, so `init.lua` fails with `attempt to call field 'install' (a nil value)`. Fix:
+  `rm -rf ~/.local/share/nvim/lazy/nvim-treesitter` and relaunch. lazy.nvim then clones `main`
+  at the locked commit, and the parsers `master` compiled into that checkout go with it.
 - `lazy-lock.json` is tracked — keeps plugin versions reproducible across machines.
 - LSP: native `vim.lsp.config` + `vim.lsp.enable`; nvim-lspconfig ships server configs; mason + mason-tool-installer auto-installs server binaries by mason package name (e.g. `lua-language-server`, not `lua_ls`).
 - Completion: blink.cmp with copilot, LSP, snippets, buffer, path sources.

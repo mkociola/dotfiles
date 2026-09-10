@@ -40,6 +40,18 @@ stow --no-folding claude    # claude always takes the flag, including on restow
 stow -D ghostty             # uninstall ghostty package
 ```
 
+### Neovim setup
+
+Plugins install themselves on first launch. A machine that already has nvim-treesitter's old
+`master` checkout fails on startup with `attempt to call field 'install' (a nil value)`: lazy.nvim
+only clones missing plugins and never switches a checkout's branch. Delete the checkout and
+relaunch, which clones `main` at the locked commit and builds the parsers:
+
+```bash
+rm -rf ~/.local/share/nvim/lazy/nvim-treesitter
+nvim
+```
+
 ### Tmux setup
 
 After stowing the `tmux` package:
