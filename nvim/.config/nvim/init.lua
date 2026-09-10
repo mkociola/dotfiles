@@ -73,7 +73,8 @@ require("lazy").setup({
 				vim.api.nvim_create_autocmd("FileType", {
 					callback = function(args)
 						local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
-						if not lang or not pcall(vim.treesitter.language.add, lang) then
+						-- add() returns nil, not an error, when no parser exists (nvim 0.11+)
+						if not lang or not vim.treesitter.language.add(lang) then
 							return
 						end
 						vim.treesitter.start(args.buf, lang)
@@ -86,7 +87,6 @@ require("lazy").setup({
 		-- Telescope
 		{
 			"nvim-telescope/telescope.nvim",
-			tag = "0.1.8",
 			dependencies = {
 				"nvim-lua/plenary.nvim",
 				"nvim-telescope/telescope-file-browser.nvim",
