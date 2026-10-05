@@ -15,7 +15,6 @@
       "Bash(gh auth refresh *)"
     ]
   },
-  "model": "us.anthropic.claude-opus-5",
   "extraKnownMarketplaces": {
     "humanizer": {
       "source": {
