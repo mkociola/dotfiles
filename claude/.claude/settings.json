@@ -36,5 +36,6 @@
   "agentPushNotifEnabled": true,
   "enabledPlugins": {
     "humanizer@humanizer": true
-  }
+  },
+  "feedbackDrafts": "off"
 }
