@@ -87,9 +87,10 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 - `commands/design.md` — `/design [PR# | url | branch]`, the design and simplicity pass
   `/code-review` lacks: architecture and KISS only, refute-first filter, no bug hunting. Runs as a
   background fork pinned to `xhigh`. Pair it with `/code-review`.
-- `settings.json` — every generic preference: model, effort, `tui`, theme, permissions,
+- `settings.json` — every generic preference: effort, `tui`, theme, permissions,
   attribution. If Claude Code writes machine state into it (plugin installs, marketplaces),
-  commit it or `git checkout` it — same rule as `zsh/.zshrc`.
+  commit it or `git checkout` it — same rule as `zsh/.zshrc`. No `model` is set
+  on purpose; a machine that wants a default puts it in its `~/.claude/settings.local.json`.
 - Plugins: installed with `claude plugin install <plugin>@<marketplace> --scope user`, which
   writes `extraKnownMarketplaces` and `enabledPlugins` into `settings.json`. Those two keys are
   the whole install, so committing them is how a plugin reaches the other machine: it clones
