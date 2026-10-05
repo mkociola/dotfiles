@@ -41,7 +41,8 @@
   "theme": "dark",
   "agentPushNotifEnabled": true,
   "enabledPlugins": {
-    "humanizer@humanizer": true
+    "humanizer@humanizer": true,
+    "cc-plugin-you-should-know@builtin": true
   },
   "feedbackDrafts": "off",
   "autoMode": {
