@@ -22,6 +22,12 @@
         "source": "github",
         "repo": "blader/humanizer"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
   "effortLevel": "high",
@@ -42,7 +48,9 @@
   "agentPushNotifEnabled": true,
   "enabledPlugins": {
     "humanizer@humanizer": true,
-    "cc-plugin-you-should-know@builtin": true
+    "cc-plugin-you-should-know@builtin": true,
+    "superpowers@claude-plugins-official": true,
+    "ponytail@ponytail": true
   },
   "feedbackDrafts": "off",
   "autoMode": {
