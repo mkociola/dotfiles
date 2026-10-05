@@ -96,9 +96,14 @@ puts confidential material one `git add -f` away from a public push. With `--no-
   the whole install, so committing them is how a plugin reaches the other machine: it clones
   itself into `~/.claude/plugins/` (state, untracked) on first launch there. Installed so far:
   [humanizer](https://github.com/blader/humanizer), which rewrites AI-sounding prose, as
-  `/humanizer:humanizer` (plugin skills are always namespaced). Third-party marketplaces have
-  auto-update off by default, so pull upstream fixes with
-  `claude plugin marketplace update humanizer`.
+  `/humanizer:humanizer` (plugin skills are always namespaced);
+  [superpowers](https://github.com/obra/superpowers), from the official marketplace, which adds
+  skills for brainstorming, subagent-driven development, systematic debugging and TDD; and
+  [ponytail](https://github.com/DietrichGebert/ponytail), from its own marketplace, which pushes
+  for the simplest solution that works. ponytail runs `node` hooks on session start, subagent
+  start and every prompt, so `node` must be on PATH. Third-party marketplaces have auto-update
+  off by default, so pull upstream fixes with `claude plugin marketplace update humanizer` (or
+  `ponytail`).
   Claude Desktop shares none of this: no `settings.json`, no marketplaces, no
   `~/.claude/skills`. A skill gets there only as a zip upload under Settings > Capabilities >
   Skills, which is a per-machine manual step and nothing this repo can do for you. The zip needs
