@@ -1,9 +1,14 @@
 # Basic zsh history settings
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=50000
+SAVEHIST=50000
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+
+# Completion (Homebrew completions first; /bin/zsh doesn't know about them)
+fpath=(${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh/site-functions $fpath)
+autoload -Uz compinit && compinit
 
 # Enable colors
 alias ls="ls -G"
