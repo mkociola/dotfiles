@@ -269,6 +269,12 @@ require("lazy").setup({
 				require("copilot").setup({
 					suggestion = { enabled = false },
 					panel = { enabled = false },
+					-- WSL has no desktop login to unlock GNOME Keyring, so the server's keytar lookup
+					-- pops "Unlock Keyring" on first insert. A dead D-Bus address makes the lookup fail
+					-- fast and the server falls back to its file store.
+					server_opts_overrides = vim.fn.has("wsl") == 1 and {
+						cmd_env = { DBUS_SESSION_BUS_ADDRESS = "unix:path=/nonexistent" },
+					} or {},
 				})
 			end,
 		},
