@@ -1,0 +1,20 @@
+[user]
+	name = mkociola
+	email = mateusz.kociola@icloud.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[rerere]
+	enabled = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	algorithm = histogram
+# Per-machine overrides (work email, signing key). Not tracked; git skips it if missing.
+[include]
+	path = ~/.config/git/config.local

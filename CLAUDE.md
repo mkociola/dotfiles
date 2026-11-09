@@ -43,6 +43,9 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 - **No secrets in repo.** `.config/github-copilot/` (OAuth tokens) and `uv-receipt.json` are gitignored. Copilot re-auths from nvim on first use.
 - **Adding a new tool**: create `<tool>/.config/<tool>/...` (or `<tool>/.<dotfile>` for `$HOME`-level files). Don't reintroduce a single flat package.
 - **Per-machine config**: tracked `zsh/.zshrc` sources `~/.zshrc.local` at the end if present. Put machine-specific lines (uv env source, work paths, proxies, secrets) there — `~/.zshrc.local` is never tracked. If an installer mutates `zsh/.zshrc`, move its line into `~/.zshrc.local` and `git checkout zsh/.zshrc`.
+  Git works the same way: tracked `git/.config/git/config` includes `~/.config/git/config.local`
+  (work email, signing key), which git skips when it doesn't exist. Don't recreate `~/.gitconfig`:
+  git reads it after the XDG file, so anything there silently wins.
 
 ## Nvim
 
