@@ -54,10 +54,11 @@ Or inside a tmux session: `prefix + I` (capital i) to install plugins.
 ### Claude Code setup
 
 The `claude` package stows global settings and instructions into `~/.claude/`. Every generic
-preference (model, effort, `tui`, theme, permissions, attribution) is tracked in
+preference (`tui`, theme, permissions, attribution, plugins) is tracked in
 `claude/.claude/settings.json`, so a fresh machine needs nothing beyond
-`stow --no-folding claude`. When Claude Code itself writes into that file (plugin installs,
-marketplaces), commit the change or `git checkout` it.
+`stow --no-folding claude`. Model and effort are never tracked. When Claude Code itself writes
+into that file, commit plugin installs and marketplaces, and `git checkout` any `model`,
+`effortLevel` or `modelSettings` it adds.
 
 Anything machine-specific and private, a skill with an employer's internal hostnames for
 instance, is simply not stowed: put it straight in `~/.claude/skills/<name>/` or

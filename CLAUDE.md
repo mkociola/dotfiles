@@ -61,7 +61,7 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 - `lazy-lock.json` is tracked — keeps plugin versions reproducible across machines.
 - LSP: native `vim.lsp.config` + `vim.lsp.enable`; nvim-lspconfig ships server configs; mason + mason-tool-installer auto-installs server binaries by mason package name (e.g. `lua-language-server`, not `lua_ls`).
 - Completion: blink.cmp with copilot, LSP, snippets, buffer, path sources.
-- File explorer: oil.nvim. netrw disabled at top of `init.lua`.
+- File explorer: telescope-file-browser.nvim on `<leader>e`. netrw disabled at top of `init.lua`.
 
 ## Tmux
 
@@ -87,10 +87,19 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 - `commands/design.md` — `/design [PR# | url | branch]`, the design and simplicity pass
   `/code-review` lacks: architecture and KISS only, refute-first filter, no bug hunting. Runs as a
   background fork pinned to `xhigh`. Pair it with `/code-review`.
-- `settings.json` — every generic preference: effort, `tui`, theme, permissions,
-  attribution. If Claude Code writes machine state into it (plugin installs, marketplaces),
-  commit it or `git checkout` it — same rule as `zsh/.zshrc`. No `model` is set
-  on purpose; a machine that wants a default puts it in its `~/.claude/settings.local.json`.
+- `commands/issue.md`: `/issue <n> [hint]`, which takes a GitHub issue through triage, a
+  superpowers implementation scaled to its size, one ponytail-review pass, and a `/code-review
+  --fix` loop capped at three rounds. Out-of-scope findings become new issues.
+  With no number it takes the oldest open issue that is mine, unassigned and has no linked PR.
+  Adding `unattended` makes it never ask and always end as a PR, for headless runs such as
+  `claude -p "/issue unattended" --model fable --permission-mode auto`. `/loop /issue` is not an
+  option: the command sets `disable-model-invocation`, which also blocks scheduled runs.
+- `settings.json`: every generic preference (`tui`, theme, permissions, attribution, plugins).
+  Model and effort are left out on purpose: no `model`, `effortLevel` or `modelSettings` is
+  ever committed. Claude Code writes those keys back here when you change model or effort in a
+  session, so `git checkout` those hunks; commit the rest (plugin installs, marketplaces), same
+  rule as `zsh/.zshrc`. A machine that wants a default puts it in its
+  `~/.claude/settings.local.json`.
 - Plugins: installed with `claude plugin install <plugin>@<marketplace> --scope user`, which
   writes `extraKnownMarketplaces` and `enabledPlugins` into `settings.json`. Those two keys are
   the whole install, so committing them is how a plugin reaches the other machine: it clones
@@ -101,9 +110,13 @@ puts confidential material one `git add -f` away from a public push. With `--no-
   skills for brainstorming, subagent-driven development, systematic debugging and TDD; and
   [ponytail](https://github.com/DietrichGebert/ponytail), from its own marketplace, which pushes
   for the simplest solution that works. ponytail runs `node` hooks on session start, subagent
-  start and every prompt, so `node` must be on PATH. Third-party marketplaces have auto-update
-  off by default, so pull upstream fixes with `claude plugin marketplace update humanizer` (or
-  `ponytail`).
+  start and every prompt, so `node` must be on PATH;
+  [runpod](https://github.com/runpod/runpod-plugins-official), from its own marketplace, which
+  adds skills and an MCP server for managing Runpod pods and serverless endpoints; and
+  `cc-plugin-you-should-know@builtin`, which ships with Claude Code (no marketplace entry) and
+  now and then drops a "Heads up" tip about a Claude Code feature mid-session. Third-party
+  marketplaces have auto-update off by default, so pull upstream fixes with
+  `claude plugin marketplace update humanizer` (or `ponytail`, `runpod`).
   Claude Desktop shares none of this: no `settings.json`, no marketplaces, no
   `~/.claude/skills`. A skill gets there only as a zip upload under Settings > Capabilities >
   Skills, which is a per-machine manual step and nothing this repo can do for you. The zip needs
@@ -121,9 +134,9 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 - Per-machine MCP servers: `claude mcp add --scope user …` stores them in `~/.claude.json`,
   which lives outside the package and is never tracked.
 - **Stowed with `--no-folding`**, see Install. `~/.claude` is a real local directory and only
-  `CLAUDE.md`, `settings.json` and the two `commands/*.md` are symlinks into the repo, so
+  `CLAUDE.md`, `settings.json` and the three `commands/*.md` are symlinks into the repo, so
   nothing Claude Code generates at runtime touches this working tree. Verify with
-  `find claude -mindepth 1`: two directories and four files, nothing else, ever. The
+  `find claude -mindepth 1`: two directories and five files, nothing else, ever. The
   `.gitignore` entries for `claude/.claude/` state are a backstop in case the fold ever comes
   back.
 - Per-machine skills and commands: anything with employer-internal detail (project keys,
