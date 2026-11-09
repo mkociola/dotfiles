@@ -286,6 +286,22 @@ vim.lsp.config["*"] = vim.tbl_deep_extend("force", vim.lsp.config["*"] or {}, {
 	capabilities = capabilities,
 })
 
+-- Python: ruff lints and formats, basedpyright type-checks and hovers. "standard" mode stops
+-- basedpyright repeating ruff's unused-import warnings; ruff hover would duplicate basedpyright's.
+vim.lsp.config("ruff", {
+	on_attach = function(client)
+		client.server_capabilities.hoverProvider = false
+	end,
+})
+vim.lsp.config("basedpyright", {
+	settings = {
+		basedpyright = {
+			disableOrganizeImports = true,
+			analysis = { typeCheckingMode = "standard" },
+		},
+	},
+})
+
 vim.lsp.enable({ "lua_ls", "basedpyright", "ruff", "vtsls" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
