@@ -15,6 +15,13 @@
       "Bash(gh auth refresh *)"
     ]
   },
+  "enabledPlugins": {
+    "humanizer@humanizer": true,
+    "cc-plugin-you-should-know@builtin": true,
+    "superpowers@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "runpod@runpod": true
+  },
   "extraKnownMarketplaces": {
     "humanizer": {
       "source": {
@@ -27,31 +34,19 @@
         "source": "github",
         "repo": "DietrichGebert/ponytail"
       }
+    },
+    "runpod": {
+      "source": {
+        "source": "github",
+        "repo": "runpod/runpod-plugins-official"
+      }
     }
   },
-  "effortLevel": "high",
-  "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "high"
-    },
-    "claude-fable-5-1": {
-      "effortLevel": "xhigh"
-    },
-    "claude-opus-5-5": {
-      "effortLevel": "high"
-    }
-  },
+  "feedbackDrafts": "off",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "agentPushNotifEnabled": true,
-  "enabledPlugins": {
-    "humanizer@humanizer": true,
-    "cc-plugin-you-should-know@builtin": true,
-    "superpowers@claude-plugins-official": true,
-    "ponytail@ponytail": true
-  },
-  "feedbackDrafts": "off",
   "autoMode": {
     "environment": [
       "### Org-wide",
