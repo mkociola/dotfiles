@@ -41,7 +41,7 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 ## Conventions
 
 - **Commits**: Conventional Commits, scoped to the package: `feat(nvim):`, `fix(nvim):`, `refactor(nvim):`, `feat(zsh):`, etc.
-- **Lua** (`nvim/`): 2-space indent, formatted by stylua via conform.nvim `format_on_save`.
+- **Lua** (`nvim/`): tab indent (stylua defaults, no `stylua.toml`), formatted by stylua via conform.nvim `format_on_save`.
 - **No secrets in repo.** `.config/github-copilot/` (OAuth tokens) and `uv-receipt.json` are gitignored. Copilot re-auths from nvim on first use.
 - **Adding a new tool**: create `<tool>/.config/<tool>/...` (or `<tool>/.<dotfile>` for `$HOME`-level files). Don't reintroduce a single flat package.
 - **Per-machine config**: tracked `zsh/.zshrc` sources `~/.zshrc.local` at the end if present. Put machine-specific lines (uv env source, work paths, proxies, secrets) there — `~/.zshrc.local` is never tracked. If an installer mutates `zsh/.zshrc`, move its line into `~/.zshrc.local` and `git checkout zsh/.zshrc`.
@@ -65,6 +65,10 @@ puts confidential material one `git add -f` away from a public push. With `--no-
   at the locked commit, and the parsers `master` compiled into that checkout go with it.
 - `lazy-lock.json` is tracked — keeps plugin versions reproducible across machines.
 - LSP: native `vim.lsp.config` + `vim.lsp.enable`; nvim-lspconfig ships server configs; mason + mason-tool-installer auto-installs server binaries by mason package name (e.g. `lua-language-server`, not `lua_ls`).
+  Enabled servers: `lua_ls`, `basedpyright`, `ruff`, `vtsls`. Formatters via conform: stylua,
+  `ruff_format`, prettierd. Add a language in three places: `ensure_installed`, `vim.lsp.enable`,
+  `formatters_by_ft`. Keymaps are nvim's built-ins (`grn`, `gra`, `grr`, `gri`, `grt`, `K`) plus
+  `gd`, `<leader>ca`, `<leader>rn`; don't map bare `gr`, it makes the built-ins wait.
 - Completion: blink.cmp with copilot, LSP, snippets, buffer, path sources.
 - File explorer: telescope-file-browser.nvim on `<leader>e`. netrw disabled at top of `init.lua`.
 

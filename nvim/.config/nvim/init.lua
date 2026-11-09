@@ -30,7 +30,9 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
 vim.opt.expandtab = true
-vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.undofile = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -124,7 +126,14 @@ require("lazy").setup({
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			dependencies = { "mason-org/mason.nvim" },
 			opts = {
-				ensure_installed = { "lua-language-server", "stylua" },
+				ensure_installed = {
+					"lua-language-server",
+					"stylua",
+					"basedpyright",
+					"ruff",
+					"vtsls",
+					"prettierd",
+				},
 			},
 		},
 		{ "neovim/nvim-lspconfig" },
@@ -135,6 +144,11 @@ require("lazy").setup({
 			opts = {
 				formatters_by_ft = {
 					lua = { "stylua" },
+					python = { "ruff_format" },
+					javascript = { "prettierd" },
+					typescript = { "prettierd" },
+					javascriptreact = { "prettierd" },
+					typescriptreact = { "prettierd" },
 				},
 				format_on_save = { timeout_ms = 1000, lsp_format = "fallback" },
 			},
@@ -272,16 +286,14 @@ vim.lsp.config["*"] = vim.tbl_deep_extend("force", vim.lsp.config["*"] or {}, {
 	capabilities = capabilities,
 })
 
-vim.lsp.enable({ "lua_ls" })
+vim.lsp.enable({ "lua_ls", "basedpyright", "ruff", "vtsls" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local bufnr = args.buf
 
-		-- Basic keymaps
+		-- Built-ins cover the rest: grn, gra, grr, gri, grt, K
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr })
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr })
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr })
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr })
 
