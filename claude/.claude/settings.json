@@ -8,6 +8,9 @@
     "allow": [
       "Bash(gh *)"
     ],
+    "ask": [
+      "Bash(gh api *)"
+    ],
     "deny": [
       "Bash(gh repo delete *)",
       "Bash(gh repo edit *)",
