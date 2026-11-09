@@ -6,7 +6,7 @@ Personal configuration files, managed with GNU stow as per-tool packages.
 
 Everything comes from the [Brewfile](Brewfile): stow, neovim, tree-sitter CLI, ripgrep, tmux,
 gh, node, Ghostty and the two Nerd Fonts. Version floors: neovim 0.12+ (nvim-treesitter `main`
-branch), tree-sitter CLI 0.26.1+, tmux 3.1+ (XDG config path).
+branch), tree-sitter CLI 0.26.1+, tmux 3.2+ (`terminal-features`).
 
 ## Install
 

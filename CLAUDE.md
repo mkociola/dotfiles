@@ -74,7 +74,7 @@ puts confidential material one `git add -f` away from a public push. With `--no-
 
 ## Tmux
 
-- Config: `~/.config/tmux/tmux.conf` (XDG-style; tmux 3.1+).
+- Config: `~/.config/tmux/tmux.conf` (XDG-style, which needs tmux 3.1+; `terminal-features` raises the floor to 3.2+).
 - Plugin manager: tpm. First-time setup:
   ```bash
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
