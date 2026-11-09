@@ -4,24 +4,16 @@ Personal configuration files, managed with GNU stow as per-tool packages.
 
 ## Requirements
 
-- [stow](https://www.gnu.org/software/stow/) — symlink farm manager
-- zsh
-- neovim 0.12+ (nvim-treesitter `main` branch)
-- tree-sitter CLI 0.26.1+ (`brew install tree-sitter-cli`), used by nvim-treesitter to build parsers
-- ghostty
-- tmux (3.1+ for XDG config path)
-- ripgrep (telescope live grep)
-
-### Fonts
-
-- JetBrains Mono Nerd Font
-- Symbols Only Nerd Font
+Everything comes from the [Brewfile](Brewfile): stow, neovim, tree-sitter CLI, ripgrep, tmux,
+gh, node, Ghostty and the two Nerd Fonts. Version floors: neovim 0.12+ (nvim-treesitter `main`
+branch), tree-sitter CLI 0.26.1+, tmux 3.1+ (XDG config path).
 
 ## Install
 
 ```bash
 git clone git@github.com:mkociola/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+brew bundle
 stow ghostty git nvim tmux zsh
 stow --no-folding claude
 ```

@@ -11,7 +11,8 @@ dotfiles/
 ├── git/       → ~/.config/git/
 ├── nvim/      → ~/.config/nvim/
 ├── tmux/      → ~/.config/tmux/
-└── zsh/       → ~/.zshrc
+├── zsh/       → ~/.zshrc
+└── Brewfile   (not a package; `brew bundle` installs what the packages need)
 ```
 
 A package directory mirrors the install target. Inside `nvim/`, the path is `nvim/.config/nvim/init.lua`; after `stow nvim`, `~/.config/nvim/init.lua` is a symlink into the repo.
@@ -21,6 +22,7 @@ A package directory mirrors the install target. Inside `nvim/`, the path is `nvi
 From repo root:
 
 ```bash
+brew bundle                             # dependencies, from Brewfile
 stow ghostty git nvim tmux zsh          # all but claude
 stow --no-folding claude                # claude: see below, never plain `stow claude`
 stow nvim                               # one

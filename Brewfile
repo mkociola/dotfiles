@@ -1,0 +1,10 @@
+brew "stow"
+brew "neovim"
+brew "tree-sitter-cli"
+brew "ripgrep"
+brew "tmux"
+brew "gh"
+brew "node"   # ponytail plugin hooks
+cask "ghostty"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-symbols-only-nerd-font"
