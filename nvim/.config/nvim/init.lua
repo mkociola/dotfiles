@@ -50,6 +50,7 @@ require("lazy").setup({
 				ts.install({
 					"astro",
 					"bash",
+					"beancount",
 					"c",
 					"css",
 					"dockerfile",
@@ -131,8 +132,7 @@ require("lazy").setup({
 					"stylua",
 					"basedpyright",
 					"ruff",
-					"vtsls",
-					"prettierd",
+					"beancount-language-server",
 				},
 			},
 		},
@@ -145,10 +145,6 @@ require("lazy").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "ruff_format" },
-					javascript = { "prettierd" },
-					typescript = { "prettierd" },
-					javascriptreact = { "prettierd" },
-					typescriptreact = { "prettierd" },
 				},
 				format_on_save = { timeout_ms = 1000, lsp_format = "fallback" },
 			},
@@ -302,7 +298,7 @@ vim.lsp.config("basedpyright", {
 	},
 })
 
-vim.lsp.enable({ "lua_ls", "basedpyright", "ruff", "vtsls" })
+vim.lsp.enable({ "lua_ls", "basedpyright", "ruff", "beancount" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)

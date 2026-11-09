@@ -65,8 +65,8 @@ puts confidential material one `git add -f` away from a public push. With `--no-
   at the locked commit, and the parsers `master` compiled into that checkout go with it.
 - `lazy-lock.json` is tracked — keeps plugin versions reproducible across machines.
 - LSP: native `vim.lsp.config` + `vim.lsp.enable`; nvim-lspconfig ships server configs; mason + mason-tool-installer auto-installs server binaries by mason package name (e.g. `lua-language-server`, not `lua_ls`).
-  Enabled servers: `lua_ls`, `basedpyright`, `ruff`, `vtsls`. Formatters via conform: stylua,
-  `ruff_format`, prettierd. Add a language in three places: `ensure_installed`, `vim.lsp.enable`,
+  Enabled servers: `lua_ls`, `basedpyright`, `ruff`, `beancount`. Formatters via conform: stylua,
+  `ruff_format`. Add a language in three places: `ensure_installed`, `vim.lsp.enable`,
   `formatters_by_ft`. Keymaps are nvim's built-ins (`grn`, `gra`, `grr`, `gri`, `grt`, `K`) plus
   `gd`, `<leader>ca`, `<leader>rn`; don't map bare `gr`, it makes the built-ins wait.
 - Completion: blink.cmp with copilot, LSP, snippets, buffer, path sources.
