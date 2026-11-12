@@ -10,3 +10,5 @@ window-padding-x = 8
 
 window-width = 120
 window-height = 30
+
+mouse-scroll-multiplier = discrete:1
